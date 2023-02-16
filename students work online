@@ -1,0 +1,175 @@
+import javax.swing.*;
+
+class Angajati {
+    private String nume;
+    private double tarifOrar;
+    private double oreLucrate;
+    private double avansSalariu;
+
+    public Angajati(String nume, double tarifOrar, double oreLucrate, double avansSalariu) {
+        this.nume = nume;
+        this.tarifOrar = tarifOrar;
+        this.oreLucrate = oreLucrate;
+        this.avansSalariu = avansSalariu;
+    }
+
+    public String getNume() {
+        return nume;
+    }
+
+    public void setNume(String nume) {
+        this.nume = nume;
+    }
+
+    public double getTarifOrar() {
+        return tarifOrar;
+    }
+
+    public void setTarifOrar(double tarifOrar) {
+        this.tarifOrar = tarifOrar;
+    }
+
+    public double getOreLucrate() {
+        return oreLucrate;
+    }
+
+    public void setOreLucrate(double oreLucrate) {
+        this.oreLucrate = oreLucrate;
+    }
+
+    public double getAvansSalariu() {
+        return avansSalariu;
+    }
+
+    public void setAvansSalariu(double avansSalariu) {
+        this.avansSalariu = avansSalariu;
+    }
+
+    public double getSalariu() {
+        return tarifOrar * oreLucrate - avansSalariu;
+    }
+
+    @Override
+    public String toString() {
+        return "Nume: " + nume + "\n" +
+                "Tarif orar: " + tarifOrar + "\n" +
+                "Ore lucrate: " + oreLucrate + "\n" +
+                "Avans salariu: " + avansSalariu + "\n" +
+                "Salariu: " + getSalariu();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Gestiune Angajati");
+        frame.setSize(500, 500);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+
+        DefaultListModel<Angajati> model = new DefaultListModel<>();
+        JList<Angajati> list = new JList<>(model);
+
+        JLabel label1 = new JLabel("Nume:");
+        JTextField textField1 = new JTextField(20);
+
+        JLabel label2 = new JLabel("Tarif orar:");
+        JTextField textField2 = new JTextField(10);
+
+        JLabel label3 = new JLabel("Ore lucrate:");
+        JTextField textField3 = new JTextField(10);
+
+        JLabel label4 = new JLabel("Avans salariu:");
+        JTextField textField4 = new JTextField(10);
+
+        JButton button1 = new JButton("Seteaza nume");
+        button1.addActionListener(event -> {
+            Angajati selected = list.getSelectedValue();
+            if (selected != null) {
+                selected.setNume(textField1.getText());
+                list.repaint();
+            }
+        });
+
+        JButton button2 = new JButton("Seteaza tarif");
+        button2.addActionListener(event -> {
+            Angajati selected = list.getSelectedValue();
+            if (selected != null) {
+                selected.setTarifOrar(Double.parseDouble(textField2.getText()));
+                list.repaint();
+            }
+        });
+
+        JButton button3 = new JButton("Seteaza ore");
+        button3.addActionListener(event -> {
+            Angajati selected = list.getSelectedValue();
+            if (selected != null) {
+                selected.setOreLucrate(Double.parseDouble(textField3.getText()));
+                list.repaint();
+            }
+        });
+
+        JButton button4 = new JButton("Seteaza avans");
+        button4.addActionListener(event -> {
+            Angajati selected = list.getSelectedValue();
+            if (selected != null) {
+                selected.setAvansSalariu(Double.parseDouble(textField4.getText()));
+                list.repaint();
+            }
+        });
+
+        JButton button5 = new JButton("Adauga angajat");
+        button5.addActionListener(event -> {
+            String nume = textField1.getText();
+            double tarif = Double.parseDouble(textField2.getText());
+            double ore = Double.parseDouble(textField3.getText());
+            double avans = Double.parseDouble(textField4.getText());
+            Angajati angajat = new Angajati(nume, tarif, ore, avans);
+            model.addElement(angajat);
+        });
+
+        JLabel label5 = new JLabel();
+        JButton button6 = new JButton("Afiseaza informatii");
+        button6.addActionListener(event -> {
+            Angajati selected = list.getSelectedValue();
+            if (selected != null) {
+                label5.setText(selected.toString());
+            }
+        });
+
+        list.addListSelectionListener(event -> {
+            Angajati selected = list.getSelectedValue();
+            if (selected != null) {
+                textField1.setText(selected.getNume());
+                textField2.setText(Double.toString(selected.getTarifOrar()));
+                textField3.setText(Double.toString(selected.getOreLucrate()));
+                textField4.setText(Double.toString(selected.getAvansSalariu()));
+            }
+        });
+
+        panel.add(new JScrollPane(list));
+        panel.add(label1);
+        panel.add(textField1);
+        panel.add(button1);
+        panel.add(label2);
+        panel.add(textField2);
+        panel.add(button2);
+
+        panel.add(label3);
+        panel.add(textField3);
+        panel.add(button3);
+
+        panel.add(label4);
+        panel.add(textField4);
+        panel.add(button4);
+
+        panel.add(button5);
+
+        panel.add(button6);
+        panel.add(label5);
+
+        frame.add(panel);
+        frame.setVisible(true);
+    }
+}
