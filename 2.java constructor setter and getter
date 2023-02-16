@@ -1,0 +1,167 @@
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+public class BozoncAnca {
+
+    static Student st=new Student("Anca", "Informatica", "Java","Oracle");
+    static void afisare()
+    {
+        Frame f = new Frame("Examen");
+
+        Choice ch=new Choice();
+        ch.setBounds(50,50,150,25);
+        ch.add(st.getDisc1());
+        ch.add(st.getDisc2());
+        ch.add(st.getDisc3());
+        f.add(ch);
+
+        Button b1=new Button("Buton 1");
+        Button b2 = new Button("Buton 2");
+        Button b3= new Button("Buton 3");
+
+        b1.setBounds(220,50,100,25);
+        b2.setBounds(220,90,100,25);
+
+        b3.setBounds(220,130,100,25);
+        f.add(b1);
+        f.add(b2);
+        f.add(b3);
+
+        TextField t=new TextField();
+        t.setBounds(50,90,100,25);
+        f.add(t);
+
+        Label l=new Label("Eticheta");
+        l.setBounds(50,170,500,25);
+        f.add(l);
+
+        List lista=new List();
+        lista.setBounds(50,200,450,200);
+        f.add(lista);
+        b1.addActionListener(e -> {
+            String select= ch.getSelectedItem();
+            if(select == st.getDisc1())
+               lista.add(String.valueOf(st.getNote1()));
+            else if(select == st.getDisc2())
+                lista.add(String.valueOf(st.getNote2()));
+            else if(select ==st.getDisc3())
+                lista.add(String.valueOf(st.getNote3()));
+
+        });
+        b2.addActionListener(e -> {
+            String select= ch.getSelectedItem();
+            if(select == st.getDisc1())
+                st.setNote1(Integer.parseInt(t.getText()));
+            else if(select == st.getDisc2())
+                st.setNote2(Integer.parseInt(t.getText()));
+            else if(select ==st.getDisc3())
+                st.setNote3(Integer.parseInt(t.getText()));
+
+
+        });
+        b3.addActionListener(e -> {
+            l.setText(st.toString());
+        });
+        f.setSize(600,450);
+        f.setLayout(null);
+        f.setVisible(true);
+        f.setLocationRelativeTo(null);
+        f.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                f.dispose();
+            }
+        });
+
+    }
+    public static void main(String [] args)
+    {
+        afisare();
+    }
+}
+
+public class Student {
+    String stdNume;
+    String denDisc1, denDisc2, denDisc3;
+    int note1,note2, note3;
+
+    public Student() {
+    }
+
+    public Student(String stdNume, String denDisc1, String denDisc2, String denDisc3) {
+        this.stdNume = stdNume;
+        this.denDisc1 = denDisc1;
+        this.denDisc2 = denDisc2;
+        this.denDisc3 = denDisc3;
+        this.note1 = 1;
+        this.note2 = 2;
+        this.note3 = 3;
+    }
+
+    public String getNume() {
+        return stdNume;
+    }
+
+    public void setNume(String stdNume) {
+        this.stdNume = stdNume;
+    }
+
+    public String getDisc1() {
+        return denDisc1;
+    }
+
+    public void setDisc1(String denDisc1) {
+        this.denDisc1 = denDisc1;
+    }
+
+    public String getDisc2() {
+        return denDisc2;
+    }
+
+    public void setDisc2(String denDisc2) {
+        this.denDisc2 = denDisc2;
+    }
+
+    public String getDisc3() {
+        return denDisc3;
+    }
+
+    public void setDisc3(String denDisc3) {
+        this.denDisc3 = denDisc3;
+    }
+
+    public int getNote1() {
+        return note1;
+    }
+
+    public void setNote1(int note1) {
+        this.note1 = note1;
+    }
+
+    public int getNote2() {
+        return note2;
+    }
+
+    public void setNote2(int note2) {
+        this.note2 = note2;
+    }
+
+    public int getNote3() {
+        return note3;
+    }
+
+    public void setNote3(int note3) {
+        this.note3 = note3;
+    }
+
+    @Override
+    public String toString() {
+        return "Nume : " + stdNume + ", "+denDisc1 +
+                ", " + denDisc2 +
+                ", " + denDisc3 +
+                ", Nota 1 : " + note1 +
+                ", Nota 2 : " + note2 +
+                ", Nota 3 : " + note3 ;
+    }
+}
