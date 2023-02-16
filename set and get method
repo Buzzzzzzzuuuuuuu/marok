@@ -1,0 +1,207 @@
+import org.w3c.dom.stylesheets.LinkStyle;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+public class FocaIuliana {
+
+    static Angajati ang =new Angajati();
+
+    static void afisare(){
+        Frame f = new Frame("Examen");
+
+        Label l1=new Label("nume");
+        Label l2=new Label("tarif ");
+        Label l3=new Label("ore ");
+        Label l4=new Label("avans");
+        Label l5=new Label(" ");
+
+        l1.setBounds(50,70,35,30);
+        l2.setBounds(50,110,35,30);
+        l3.setBounds(50,150,35,30);
+        l4.setBounds(50,190,35,30);
+        l5.setBounds(150,230,350,30);
+
+        TextField t1 = new TextField();
+        TextField t2 = new TextField();
+        TextField t3 = new TextField();
+        TextField t4 = new TextField();
+
+        t1.setBounds(100,70,135,30);
+        t2.setBounds(100,110,135,30);
+        t3.setBounds(100,150,135,30);
+        t4.setBounds(100,190,135,30);
+
+        Button b1 = new Button("preluare nume");
+        Button b2 = new Button("preluare tarif");
+        Button b3 = new Button("preluare ore");
+        Button b4 = new Button("preluare avans");
+        Button b5 = new Button("creeare nou angajat");
+        Button b6 = new Button("afisare informatii");
+
+        b1.setBounds(235,70,135,30);
+        b2.setBounds(235,110,135,30);
+        b3.setBounds(235,150,135,30);
+        b4.setBounds(235,190,135,30);
+        b5.setBounds(535,230,135,30);
+        b6.setBounds(235,270,135,30);
+
+        List list = new List(4,true);
+        list.setBounds(150,350,350,150);
+
+        f.add(l1);
+        f.add(l2);
+        f.add(l3);
+        f.add(l4);
+        f.add(l5);
+
+        f.add(t1);
+        f.add(t2);
+        f.add(t3);
+        f.add(t4);
+
+        f.add(b1);
+        f.add(b2);
+        f.add(b3);
+        f.add(b4);
+        f.add(b5);
+        f.add(b6);
+
+        f.add(list);
+
+        f.setLayout(null);
+        f.setVisible(true);
+        f.setSize(550,550);
+
+        b1.addActionListener(e->{
+            if(t1.getText()!=null || t1.getText().isEmpty());
+            ang.setNume(t1.getText());
+
+        });
+
+
+        b2.addActionListener(e->{
+            if(t2.getText()!=null || t2.getText().isEmpty());
+            ang.setTarif(Integer.parseInt(t2.getText()));
+
+        });
+
+
+        b3.addActionListener(e->{
+            if(t3.getText()!=null || t3.getText().isEmpty());
+            ang.setOre(Integer.parseInt(t3.getText()));
+
+
+
+        });
+
+        b4.addActionListener(e->{
+            if(t4.getText()!=null || t4.getText().isEmpty());
+            ang.setAvans(Integer.parseInt(t4.getText()));
+
+        });
+
+        b5.addActionListener(e->{
+            if(t1!=null)
+                ang.setNume(t1.getText());
+            else
+                ang.setNume("fara nume");
+            if(t2!=null)
+                ang.setOre(Integer.parseInt(t2.getText()));
+            else
+                ang.setOre(Integer.parseInt("fara ore"));
+            if(t3!=null)
+                ang.setTarif(Integer.parseInt(t3.getText()));
+            else
+                ang.setTarif(Integer.parseInt("fara tarif"));
+            if(t4!=null)
+                ang.setAvans(Integer.parseInt(t4.getText()));
+            else
+                ang.setAvans(Integer.parseInt("fara avans"));
+
+        });
+
+        b6.addActionListener(e->{
+            l5.setText(ang.toString());
+        });
+
+
+
+
+
+        f.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                f.dispose();
+            }
+        });
+
+    }
+    public static void main(String[] args){
+        afisare();
+
+
+    }
+
+
+}
+
+public class Angajati {
+    String angNume;
+    int  tarifOrar;
+    int oreLucrate;
+    int avansSalariu;
+
+    public Angajati(String angNume, int tarifOrar, int oreLucrate, int avansSalariu) {
+        this.angNume = angNume;
+        this.tarifOrar = tarifOrar;
+        this.oreLucrate = oreLucrate;
+        this.avansSalariu = avansSalariu;
+    }
+
+    public Angajati() {
+    }
+
+    public String getNume() {
+        return angNume;
+    }
+
+    public void setNume(String angNume) {
+        this.angNume = angNume;
+    }
+
+    public int getTarif() {
+        return tarifOrar;
+    }
+
+    public void setTarif(int tarifOrar) {
+        this.tarifOrar = tarifOrar;
+    }
+
+    public int getOre() {
+        return oreLucrate;
+    }
+
+    public void setOre(int oreLucrate) {
+        this.oreLucrate = oreLucrate;
+    }
+
+    public int getAvans() {
+        return avansSalariu;
+    }
+
+    public void setAvans(int avansSalariu) {
+        this.avansSalariu = avansSalariu;
+    }
+
+    @Override
+    public String toString() {
+        return "Angajat: " +
+                "  '" + angNume + '\'' +
+                "  tarif pe ora : " + tarifOrar +
+                " ore lucrate : " + oreLucrate +
+                " avans primit : " + avansSalariu ;
+    }
+}
