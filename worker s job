@@ -1,0 +1,193 @@
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+class Student {
+    private String stdNume;
+    private String denDisc1;
+    private String denDisc2;
+    private String denDisc3;
+    private int note1;
+    private int note2;
+    private int note3;
+
+    public Student(String stdNume, String denDisc1, String denDisc2, String denDisc3) {
+        this.stdNume = stdNume;
+        this.denDisc1 = denDisc1;
+        this.denDisc2 = denDisc2;
+        this.denDisc3 = denDisc3;
+        this.note1 = 0;
+        this.note2 = 0;
+        this.note3 = 0;
+    }
+
+    public String getNume() {
+        return this.stdNume;
+    }
+
+    public void setNume(String nume) {
+        this.stdNume = nume;
+    }
+
+    public String getDisc1() {
+        return this.denDisc1;
+    }
+
+    public void setDisc1(String disc1) {
+        this.denDisc1 = disc1;
+    }
+
+    public String getDisc2() {
+        return this.denDisc2;
+    }
+
+    public void setDisc2(String disc2) {
+        this.denDisc2 = disc2;
+    }
+
+    public String getDisc3() {
+        return this.denDisc3;
+    }
+
+    public void setDisc3(String disc3) {
+        this.denDisc3 = disc3;
+    }
+
+    public int getNota1() {
+        return this.note1;
+    }
+
+    public void setNota1(int nota1) {
+        this.note1 = nota1;
+    }
+
+    public int getNota2() {
+        return this.note2;
+    }
+
+    public void setNota2(int nota2) {
+        this.note2 = nota2;
+    }
+
+    public int getNota3() {
+        return this.note3;
+    }
+
+    public void setNota3(int nota3) {
+        this.note3 = nota3;
+    }
+
+    public String toString() {
+        return "Studentul " + this.stdNume + " a obtinut urmatoarele note: " + this.note1 + " la " + this.denDisc1 + ", " + this.note2 + " la " + this.denDisc2 + " si " + this.note3 + " la " + this.denDisc3 + ".";
+    }
+}
+
+public class Main2 {
+    private static Student student = new Student("Popescu Ion", "Matematica", "Informatica", "Fizica");
+    private static String[] discipline = {student.getDisc1(), student.getDisc2(), student.getDisc3()};
+    private static JComboBox<String> cbDiscipline;
+    private static JLabel labelInformatii = new JLabel("");
+    private static JList<Integer> noteList;
+    public static void main(String[] args)
+    {
+        JFrame frame = new JFrame("Formular student");
+        frame.setSize(500, 500);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        JLabel labelDisciplina = new JLabel("Disciplina:");
+        panel.add(labelDisciplina);
+
+        cbDiscipline = new JComboBox<>(discipline);
+        cbDiscipline.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                updateListaNote();
+            }
+        });
+        panel.add(cbDiscipline);
+
+        JButton btnAdaugaNota = new JButton("Adauga nota");
+        btnAdaugaNota.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                adaugaNota();
+            }
+        });
+        panel.add(btnAdaugaNota);
+
+        JLabel labelNote = new JLabel("Note:");
+        panel.add(labelNote);
+
+        DefaultListModel<Integer> listModel = new DefaultListModel<Integer>();
+        noteList = new JList<>(listModel);
+        panel.add(noteList);
+
+        JButton btnAfiseazaInfo = new JButton("Afiseaza informatii");
+        btnAfiseazaInfo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                afiseazaInformatii();
+            }
+        });
+        panel.add(btnAfiseazaInfo);
+
+        panel.add(labelInformatii);
+        frame.getContentPane().add(panel);
+        frame.setVisible(true);
+    }
+
+    private static void updateListaNote() {
+        DefaultListModel<Integer> listModel = new DefaultListModel<Integer>();
+        switch (cbDiscipline.getSelectedIndex()) {
+            case 0:
+                listModel.addElement(student.getNota1());
+                break;
+            case 1:
+                listModel.addElement(student.getNota2());
+                break;
+            case 2:
+                listModel.addElement(student.getNota3());
+                break;
+        }
+        noteList.setModel(listModel);
+    }
+
+    private static void adaugaNota() {
+        int nota = Integer.parseInt(JOptionPane.showInputDialog("Introduceti nota:"));
+        switch (cbDiscipline.getSelectedIndex()) {
+            case 0:
+                if (student.getNota1() < 5) {
+                    student.setNota1(nota);
+                    JOptionPane.showMessageDialog(null, "Nota adaugata cu succes!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Studentul a promovat disciplina " + student.getDisc1() + " si nu mai poate da examen!");
+                }
+                break;
+            case 1:
+                if (student.getNota2() < 5) {
+                    student.setNota2(nota);
+                    JOptionPane.showMessageDialog(null, "Nota adaugata cu succes!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Studentul a promovat disciplina " + student.getDisc2() + " si nu mai poate da examen!");
+                }
+                break;
+            case 2:
+                if (student.getNota3() < 5) {
+                    student.setNota3(nota);
+                    JOptionPane.showMessageDialog(null, "Nota adaugata cu succes!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Studentul a promovat disciplina " + student.getDisc3() + " si nu mai poate da examen!");
+                }
+                break;
+        }
+        updateListaNote();
+    }
+
+    private static void afiseazaInformatii() {
+        String informatii = "Studentul " + student.getNume() + " a obtinut urmatoarele note: " +
+                student.getNota1() + " la " + student.getDisc1() + ", " +
+                student.getNota2() + " la " + student.getDisc2() + " si " +
+                student.getNota3() + " la " + student.getDisc3() + ".";
+        labelInformatii.setText(informatii);
+    }
+}
