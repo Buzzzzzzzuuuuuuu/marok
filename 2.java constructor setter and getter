@@ -16,9 +16,9 @@ public class BozoncAnca {
         ch.add(st.getDisc3());
         f.add(ch);
 
-        Button b1=new Button("Buton 1");
-        Button b2 = new Button("Buton 2");
-        Button b3= new Button("Buton 3");
+        Button b1=new Button("Afisare in tabela");
+        Button b2 = new Button("Salvare");
+        Button b3= new Button("Afisare");
 
         b1.setBounds(220,50,100,25);
         b2.setBounds(220,90,100,25);
